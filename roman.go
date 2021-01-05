@@ -10,8 +10,9 @@ import (
 )
 
 type roman struct {
-	model      *fuzzy.Model
-	httpClient *http.Client
+	model       *fuzzy.Model
+	httpClient  *http.Client
+	caesarEmoji *discordgo.Emoji
 }
 
 func newRoman() *roman {
@@ -63,12 +64,18 @@ func (q *roman) answer(s *discordgo.Session, m *discordgo.MessageCreate) {
 		status = "The romans are out! :partying_face:"
 	} else if resp.StatusCode == http.StatusNotFound {
 		status = "The romans are not released yet. "
-		emoji, err := findEmoji(s, m.GuildID, "Caesar")
-		if err != nil {
-			log.Errorf(err.Error())
+
+		if q.caesarEmoji == nil {
+			emoji, err := findEmoji(s, m.GuildID, "Caesar")
+			if err != nil {
+				log.Errorf(err.Error())
+			}
+			q.caesarEmoji = emoji
 		}
 
-		status += emoji.MessageFormat()
+		if q.caesarEmoji != nil {
+			status += q.caesarEmoji.MessageFormat()
+		}
 	} else {
 		return
 	}
