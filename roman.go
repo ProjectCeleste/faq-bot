@@ -18,7 +18,7 @@ type roman struct {
 
 func newRoman() *roman {
 	return &roman{
-		model: makeModel([]string{"roman", "romans", "out", "released", "are", "have"}),
+		model: makeModel([]string{"roman", "romans", "out", "release", "released", "are", "have", "when"}),
 		httpClient: &http.Client{
 			Timeout: time.Second * 5,
 		},
@@ -29,18 +29,21 @@ func (q *roman) trigger(message []string) bool {
 	romanFound := false
 	releasedFound := false
 	questionFound := false
+	whenFound := false
 
 	for _, w := range message {
 		spell := q.model.SpellCheck(w)
 		if strings.HasPrefix(spell, "roman") {
 			romanFound = true
-		} else if spell == "out" || spell == "released" {
+		} else if spell == "out" || spell == "released" || spell == "release" {
 			releasedFound = true
+		} else if spell == "when" {
+			whenFound = true
 		} else if spell == "have" || spell == "are" {
-			questionFound = findQuestionMark(message)
+			questionFound = true
 		}
 
-		if romanFound && releasedFound && questionFound {
+		if romanFound && ((releasedFound && questionFound) || whenFound) && findQuestionMark(message) {
 			return true
 		}
 	}
@@ -80,6 +83,8 @@ func (q *roman) answer(s *discordgo.Session, m *discordgo.MessageCreate) {
 		if q.caesarEmoji != nil {
 			status += q.caesarEmoji.MessageFormat()
 		}
+
+		status += "\nThe romans will be released when they're ready."
 	} else {
 		return
 	}

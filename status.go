@@ -22,7 +22,7 @@ type health struct {
 
 func newServerStatus() *serverStatus {
 	return &serverStatus{
-		model: makeModel([]string{"server", "down", "offline"}),
+		model: makeModel([]string{"server", "down", "offline", "online"}),
 		httpClient: &http.Client{
 			Timeout: time.Second * 5,
 		},
@@ -31,17 +31,17 @@ func newServerStatus() *serverStatus {
 
 func (q *serverStatus) trigger(message []string) bool {
 	serverFound := false
-	downFound := false
+	statusFound := false
 
 	for _, w := range message {
 		spell := q.model.SpellCheck(w)
 		if spell == "server" {
 			serverFound = true
-		} else if spell == "down" || spell == "offline" {
-			downFound = true
+		} else if spell == "down" || spell == "offline" || w == "up" || w == "up?" || spell == "online" {
+			statusFound = true
 		}
 
-		if serverFound && downFound && findQuestionMark(message) {
+		if serverFound && statusFound && findQuestionMark(message) {
 			return true
 		}
 	}
