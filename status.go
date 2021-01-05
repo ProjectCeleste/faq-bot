@@ -41,7 +41,7 @@ func (q *serverStatus) trigger(message []string) bool {
 			downFound = true
 		}
 
-		if serverFound && downFound {
+		if serverFound && downFound && findQuestionMark(message) {
 			return true
 		}
 	}

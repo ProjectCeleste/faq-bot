@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/sajari/fuzzy"
@@ -41,4 +42,13 @@ func findEmoji(s *discordgo.Session, guildID, name string) (*discordgo.Emoji, er
 	}
 
 	return nil, fmt.Errorf("Emoji not found: %s", name)
+}
+
+func findQuestionMark(message []string) bool {
+	for _, w := range message {
+		if strings.Contains(w, "?") {
+			return true
+		}
+	}
+	return false
 }

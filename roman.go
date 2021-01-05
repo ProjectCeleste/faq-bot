@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
@@ -17,7 +18,7 @@ type roman struct {
 
 func newRoman() *roman {
 	return &roman{
-		model: makeModel([]string{"roman", "out", "released"}),
+		model: makeModel([]string{"roman", "romans", "out", "released", "are", "have"}),
 		httpClient: &http.Client{
 			Timeout: time.Second * 5,
 		},
@@ -27,16 +28,19 @@ func newRoman() *roman {
 func (q *roman) trigger(message []string) bool {
 	romanFound := false
 	releasedFound := false
+	questionFound := false
 
 	for _, w := range message {
 		spell := q.model.SpellCheck(w)
-		if spell == "roman" {
+		if strings.HasPrefix(spell, "roman") {
 			romanFound = true
 		} else if spell == "out" || spell == "released" {
 			releasedFound = true
+		} else if spell == "have" || spell == "are" {
+			questionFound = findQuestionMark(message)
 		}
 
-		if romanFound && releasedFound {
+		if romanFound && releasedFound && questionFound {
 			return true
 		}
 	}
