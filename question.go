@@ -22,7 +22,7 @@ var (
 func makeModel(words []string) *fuzzy.Model {
 	model := fuzzy.NewModel()
 
-	model.SetThreshold(1)
+	model.SetThreshold(2)
 
 	model.Train(words)
 	return model
