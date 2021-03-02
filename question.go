@@ -17,6 +17,7 @@ var (
 	questions = []question{
 		newServerStatus(),
 		newRoman(),
+		newThanks(),
 	}
 )
 
