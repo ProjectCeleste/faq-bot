@@ -18,7 +18,7 @@ type roman struct {
 
 func newRoman() *roman {
 	return &roman{
-		model: makeModel([]string{"roman", "romans", "out", "release", "released", "are", "have", "when"}),
+		model: makeModel([]string{"roman", "romans", "out", "release", "released", "are", "have", "when", "ready", "done"}),
 		httpClient: &http.Client{
 			Timeout: time.Second * 5,
 		},
@@ -35,7 +35,7 @@ func (q *roman) trigger(message []string) bool {
 		spell := q.model.SpellCheck(w)
 		if strings.HasPrefix(spell, "roman") {
 			romanFound = true
-		} else if spell == "out" || spell == "released" || spell == "release" {
+		} else if spell == "out" || spell == "released" || spell == "release" || spell == "ready" || spell == "done" {
 			releasedFound = true
 		} else if spell == "when" {
 			whenFound = true
@@ -70,10 +70,10 @@ func (q *roman) answer(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if resp.StatusCode == http.StatusOK {
 		status = "The romans are out! :partying_face:"
 	} else if resp.StatusCode == http.StatusNotFound {
-		status = "The romans are not released yet. "
+		status = "Beware the Ides of March! We shall throw open the gates of Rome on March 15. See you all in the Eternal City! "
 
 		if q.caesarEmoji == nil {
-			emoji, err := findEmoji(s, m.GuildID, "Caesar")
+			emoji, err := findEmoji(s, m.GuildID, "Crassus")
 			if err != nil {
 				log.Errorf(err.Error())
 			}
@@ -83,8 +83,6 @@ func (q *roman) answer(s *discordgo.Session, m *discordgo.MessageCreate) {
 		if q.caesarEmoji != nil {
 			status += q.caesarEmoji.MessageFormat()
 		}
-
-		status += "\nThe romans will be released when they're ready."
 	} else {
 		return
 	}
