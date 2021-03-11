@@ -2,10 +2,15 @@ package cmd
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/ProjectCeleste/faq-bot/internal/detect"
 	"github.com/bwmarrin/discordgo"
+)
+
+var (
+	quotes = regexp.MustCompile(`"(.*?)"`)
 )
 
 // Command a chatbot operation that has specific trigger conditions.
@@ -21,7 +26,9 @@ type SentenceDetectionCommand struct {
 
 // Trigger returns true if the message matches the trigger criteria for this command.
 func (s *SentenceDetectionCommand) Trigger(message *discordgo.MessageCreate) bool {
-	return s.Detector.Detect(strings.ToLower(strings.TrimSpace(message.Content)))
+	sentence := strings.ToLower(strings.TrimSpace(message.Content))
+	sentence = quotes.ReplaceAllString(sentence, "")
+	return s.Detector.Detect(sentence)
 }
 
 func findEmoji(s *discordgo.Session, guildID, name string) (*discordgo.Emoji, error) {

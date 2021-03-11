@@ -28,4 +28,6 @@ func TestTriggerStatus(t *testing.T) {
 	assert.False(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "are you on the server?"}}))
 	assert.False(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "i'm off, see you later on the server?"}}))
 	assert.False(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "i'm leaving the server? no that's off"}}))
+	assert.False(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "just say \"server up?\" to ask"}}))
+	assert.True(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "server \"server up?\" up?"}}))
 }

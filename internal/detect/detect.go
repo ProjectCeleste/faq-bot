@@ -68,7 +68,7 @@ func (d *WordGroup) Detect(sentence string) (int, bool, bool) {
 	wordBegin := -1
 	newI := 0
 	for i, c := range sentence {
-		if !unicode.IsLetter(c) {
+		if !unicode.IsLetter(c) && c != '\'' {
 			if wordBegin != -1 {
 				newI = i
 				if contains(d.Words, sentence[wordBegin:i]) {
