@@ -22,7 +22,7 @@ func NewRomans() *Romans {
 				Groups: []detect.WordGroup{
 					{Words: []string{"when", "are", "have", "has"}},
 					{Words: []string{"romans", "roman"}},
-					{Words: []string{"out", "ready", "released", "release"}},
+					{Words: []string{"out", "ready", "released", "release", "coming"}},
 				},
 				Variants: []detect.SentenceDetector{
 					{

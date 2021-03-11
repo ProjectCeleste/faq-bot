@@ -21,6 +21,7 @@ func TestTriggerRomans(t *testing.T) {
 	assert.True(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "romans when?"}}))
 	assert.True(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "have the romans been released?"}}))
 	assert.True(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "romans out?"}}))
+	assert.True(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "when are the romans coming?"}}))
 
 	assert.False(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "when will the ro  mans come out?"}}))
 	assert.False(t, c.Trigger(&discordgo.MessageCreate{Message: &discordgo.Message{Content: "when will the romans come out"}}))

@@ -77,6 +77,9 @@ func (d *WordGroup) Detect(sentence string) (int, bool, bool) {
 				wordBegin = -1
 			}
 			if isEndOfSentence(c) {
+				if d.Negate {
+					return 0, false, true
+				}
 				return i + 1, true, false
 			}
 			continue
