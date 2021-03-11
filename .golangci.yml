@@ -1,6 +1,6 @@
 linters-settings:
   gocyclo:
-    min-complexity: 20
+    min-complexity: 15
   gofmt:
     simplify: true
   misspell:
@@ -12,6 +12,8 @@ linters:
     - golint
     - gocyclo
     - misspell
+    - bodyclose
+    - maligned
   disable:
     - errcheck
   disable-all: false
@@ -19,3 +21,5 @@ linters:
 
 issues:
   exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
