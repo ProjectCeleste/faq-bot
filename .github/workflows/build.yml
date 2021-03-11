@@ -1,0 +1,63 @@
+name: Build and Deploy to production
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - name: Build
+        run: go build -ldflags="-w -s"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: faq-bot
+          path: faq-bot
+  deploy:
+    needs: build
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: faq-bot
+      - name: Stop service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo systemctl stop ${{ secrets.SERVICE_NAME_PROD }}
+      - name: Upload files
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "faq-bot"
+          strip_components: 1
+          overwrite: true
+          target: "${{ secrets.DEPLOY_TARGET }}"
+  restart:
+    runs-on: ubuntu-16.04
+    needs: deploy
+    steps:
+      - name: Restart service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            chmod +x ${{ secrets.DEPLOY_TARGET }}/faq-bot
+            sudo systemctl start ${{ secrets.SERVICE_NAME_PROD }}
