@@ -27,7 +27,6 @@ type WordGroup struct {
 func (d *SentenceDetector) Detect(sentence string) bool {
 	sentenceOK := true
 	s := sentence
-	// TODO ignore quoted parts
 	for _, g := range d.Groups {
 		i, reset, ok := g.Detect(s)
 		if reset {
