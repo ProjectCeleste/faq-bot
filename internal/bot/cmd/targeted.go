@@ -69,9 +69,9 @@ func (c *TargetedCommand) Trigger(message *discordgo.MessageCreate) bool {
 	if !c.lastResponse.IsZero() && time.Since(c.lastResponse) < c.Timeout {
 		return false
 	}
-	if message.Author.ID == c.TargetUserID {
+	if message.Author.ID == c.TargetUserID && c.TargetedSentenceDetection.Trigger(message) {
 		c.lastResponse = time.Now()
-		return c.TargetedSentenceDetection.Trigger(message)
+		return true
 	}
 	return false
 }
