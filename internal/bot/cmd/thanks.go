@@ -7,13 +7,13 @@ import (
 
 // Thanks say "you're welcome" when the bot is thanked.
 type Thanks struct {
-	SentenceDetectionCommand
+	SentenceDetection
 }
 
 // NewThanks create a new Thanks command.
 func NewThanks() *Thanks {
 	return &Thanks{
-		SentenceDetectionCommand: SentenceDetectionCommand{
+		SentenceDetection: SentenceDetection{
 			Detector: &detect.SentenceDetector{
 				Question: false,
 				Groups: []detect.WordGroup{

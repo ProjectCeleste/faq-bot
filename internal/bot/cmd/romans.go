@@ -9,14 +9,14 @@ import (
 
 // Romans say romans release date.
 type Romans struct {
-	SentenceDetectionCommand
+	SentenceDetection
 	caesarEmoji *discordgo.Emoji
 }
 
 // NewRomans create a new Romans command.
 func NewRomans() *Romans {
 	return &Romans{
-		SentenceDetectionCommand: SentenceDetectionCommand{
+		SentenceDetection: SentenceDetection{
 			Detector: &detect.SentenceDetector{
 				Question: true,
 				Groups: []detect.WordGroup{

@@ -55,11 +55,15 @@ func (b *Bot) readMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 // NewFAQBot create a new Celeste FAQ Bot with preloaded commands.
 func NewFAQBot() *Bot {
-	return &Bot{
-		Commands: []cmd.Command{
-			cmd.NewStatus(),
-			cmd.NewRomans(),
-			cmd.NewThanks(),
-		},
+	commands := []cmd.Command{
+		cmd.NewStatus(),
+		cmd.NewRomans(),
+		cmd.NewThanks(),
 	}
+	targetedCmd := cmd.CreateTargetedCommands()
+	commands = append(commands, targetedCmd...)
+	bot := &Bot{
+		Commands: commands,
+	}
+	return bot
 }

@@ -12,7 +12,7 @@ import (
 
 // Status say game server status when asked.
 type Status struct {
-	SentenceDetectionCommand
+	SentenceDetection
 	httpClient *http.Client
 }
 
@@ -24,7 +24,7 @@ type health struct {
 // NewStatus create a new Thanks command.
 func NewStatus() *Status {
 	return &Status{
-		SentenceDetectionCommand: SentenceDetectionCommand{
+		SentenceDetection: SentenceDetection{
 			Detector: &detect.SentenceDetector{
 				Question: true,
 				Groups: []detect.WordGroup{
