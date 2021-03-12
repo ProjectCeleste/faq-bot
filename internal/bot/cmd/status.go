@@ -26,7 +26,7 @@ func NewStatus() *Status {
 	return &Status{
 		SentenceDetection: SentenceDetection{
 			Detector: &detect.SentenceDetector{
-				Question: true,
+				Question: detect.QuestionOnly,
 				Groups: []detect.WordGroup{
 					{Words: []string{"server"}},
 					{Words: []string{"up", "down", "on", "off"}},

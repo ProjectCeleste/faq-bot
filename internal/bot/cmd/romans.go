@@ -18,7 +18,7 @@ func NewRomans() *Romans {
 	return &Romans{
 		SentenceDetection: SentenceDetection{
 			Detector: &detect.SentenceDetector{
-				Question: true,
+				Question: detect.QuestionOnly,
 				Groups: []detect.WordGroup{
 					{Words: []string{"when", "are", "have", "has"}},
 					{Words: []string{"romans", "roman"}},
@@ -26,7 +26,7 @@ func NewRomans() *Romans {
 				},
 				Variants: []detect.SentenceDetector{
 					{
-						Question: true,
+						Question: detect.QuestionOnly,
 						Groups: []detect.WordGroup{
 							{Words: []string{"when"}},
 							{Words: []string{"play", "access"}},
@@ -34,7 +34,7 @@ func NewRomans() *Romans {
 						},
 					},
 					{
-						Question: true,
+						Question: detect.QuestionOnly,
 						Groups: []detect.WordGroup{
 							{Words: []string{"romans", "roman"}},
 							{Words: []string{"when", "out"}},

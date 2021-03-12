@@ -40,7 +40,7 @@ type TargetedCommand struct {
 
 // NewTargetedCommand create a new basic targeted command with a default Timeout of 1 hour.
 func NewTargetedCommand(userID string, keywords [][]string, response string) *TargetedCommand {
-	groups := make([]detect.WordGroup, 0, len(keywords))
+	groups := []detect.WordGroup{}
 	for _, g := range keywords {
 		groups = append(groups, detect.WordGroup{Words: g})
 	}
@@ -49,7 +49,7 @@ func NewTargetedCommand(userID string, keywords [][]string, response string) *Ta
 			TargetUserID: userID,
 			SentenceDetection: SentenceDetection{
 				Detector: &detect.SentenceDetector{
-					Question: false,
+					Question: detect.QuestionBoth,
 					Groups:   groups,
 				},
 			},
@@ -69,7 +69,7 @@ func (c *TargetedCommand) Trigger(message *discordgo.MessageCreate) bool {
 	if !c.lastResponse.IsZero() && time.Since(c.lastResponse) < c.Timeout {
 		return false
 	}
-	if message.Author.ID == c.TargetUserID && c.TargetedSentenceDetection.Trigger(message) {
+	if c.TargetedSentenceDetection.Trigger(message) {
 		c.lastResponse = time.Now()
 		return true
 	}

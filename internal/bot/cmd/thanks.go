@@ -15,7 +15,7 @@ func NewThanks() *Thanks {
 	return &Thanks{
 		SentenceDetection: SentenceDetection{
 			Detector: &detect.SentenceDetector{
-				Question: false,
+				Question: detect.QuestionNo,
 				Groups: []detect.WordGroup{
 					{
 						Negate: true,

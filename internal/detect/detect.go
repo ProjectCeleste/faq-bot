@@ -5,6 +5,20 @@ import (
 	"unicode"
 )
 
+// QuestionDetection type of message detection.
+type QuestionDetection int
+
+const (
+	// QuestionBoth ignores if the message is a question or not
+	QuestionBoth QuestionDetection = iota
+
+	// QuestionOnly only detect if sentence ends with a question mark
+	QuestionOnly
+
+	// QuestionNo only detect if sentence doesn't end with a question mark
+	QuestionNo
+)
+
 var (
 	punctuation      = regexp.MustCompile(`[,.!?:;]`)
 	nextQuestionMark = regexp.MustCompile(`^[^.!]*\?`)
@@ -12,7 +26,7 @@ var (
 
 // SentenceDetector criteria for specific sentence detection.
 type SentenceDetector struct {
-	Question bool
+	Question QuestionDetection
 	Groups   []WordGroup
 	Variants []SentenceDetector
 }
@@ -32,8 +46,8 @@ func (d *SentenceDetector) Detect(sentence string) bool {
 		if reset {
 			if !d.Detect(s[i:]) {
 				sentenceOK = false
-				break
 			}
+			break
 		}
 		if ok {
 			s = s[i:]
@@ -42,11 +56,12 @@ func (d *SentenceDetector) Detect(sentence string) bool {
 			break
 		}
 	}
-	if sentenceOK {
+	if sentenceOK && d.Question != QuestionBoth {
 		questionMarkFound := nextQuestionMark.MatchString(s)
-		if d.Question {
+		switch d.Question {
+		case QuestionOnly:
 			sentenceOK = questionMarkFound
-		} else {
+		case QuestionNo:
 			sentenceOK = !questionMarkFound
 		}
 	}

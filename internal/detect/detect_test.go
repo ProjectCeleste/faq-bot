@@ -12,7 +12,7 @@ func TestRemovePunctuation(t *testing.T) {
 
 func TestDetectSentence(t *testing.T) {
 	detector := &SentenceDetector{
-		Question: true,
+		Question: QuestionOnly,
 		Groups: []WordGroup{
 			{Words: []string{"when", "are", "have", "has"}},
 			{Words: []string{"romans", "roman"}},
@@ -20,7 +20,7 @@ func TestDetectSentence(t *testing.T) {
 		},
 		Variants: []SentenceDetector{
 			{
-				Question: true,
+				Question: QuestionOnly,
 				Groups: []WordGroup{
 					{Words: []string{"when"}},
 					{Words: []string{"play", "access"}},
@@ -28,7 +28,7 @@ func TestDetectSentence(t *testing.T) {
 				},
 			},
 			{
-				Question: true,
+				Question: QuestionOnly,
 				Groups: []WordGroup{
 					{Words: []string{"romans", "roman"}},
 					{Words: []string{"when", "out"}},
