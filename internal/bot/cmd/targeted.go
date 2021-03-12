@@ -38,7 +38,7 @@ type TargetedCommand struct {
 	mu           sync.Mutex
 }
 
-// NewTargetedCommand create a new basic targeted command with a default Timeout of 12 hours.
+// NewTargetedCommand create a new basic targeted command with a default Timeout of 1 hour.
 func NewTargetedCommand(userID string, keywords [][]string, response string) *TargetedCommand {
 	groups := make([]detect.WordGroup, 0, len(keywords))
 	for _, g := range keywords {
@@ -55,7 +55,7 @@ func NewTargetedCommand(userID string, keywords [][]string, response string) *Ta
 			},
 		},
 		Response: response,
-		Timeout:  time.Hour * 12,
+		Timeout:  time.Hour,
 	}
 }
 
