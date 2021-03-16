@@ -96,7 +96,7 @@ func CreateTargetedCommands() []Command {
 		NewTargetedCommand(chen, [][]string{{"caesar"}}, "Anyone know any good Caesar jokes?  I can take a stab at one."),
 		NewTargetedCommand(pf2k, [][]string{{"crassus"}}, "PF2K, it is an honor and a privilege to have you in my Legion!"),
 		NewTargetedCommand(systemGlitch, [][]string{{"awesome"}}, "Not as awesome as you are, master! I am looking forward to our next lesson."),
-		NewTargetedCommand(zawnius, [][]string{{"gallic"}}, "Salve Zawnius! You make a wonderful Gallic Horseman, yourself. Certes!"),
+		NewTargetedCommand(zawnius, [][]string{{"gallic"}}, "Salve Zawnius! You make a wonderful Gallic Horseman, yourself. Certe!"),
 		NewTargetedCommand(hans, [][]string{{"huns"}}, "Yes, Hans, we know you look forward to the day the Huns sack Rome. In battle it is the cowards who run the most risk. Bravery is a rampart of defense. Take heed, Hans."),
 		NewTargetedCommand(boriss, [][]string{{"sea"}, {"people"}}, "Boriss, the Sea People are pests who have no place at the table of the mighty Roman Empire."),
 		NewTargetedCommand(aman, [][]string{{"ace"}}, "Aman, we’ve heard enough of that Ace, and I am sure he has heard enough of you. All bad precedents begin as justifiable measures."),
