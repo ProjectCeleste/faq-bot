@@ -32,6 +32,7 @@ var (
 	daantjuh     = "210736536541462528"
 	floridabum   = "324376107895750657"
 	geese        = "351402427960000512"
+	romanrabbit  = "242351734649782283"
 )
 
 // TargetedCommand a simple generic command targeted at a single user.
@@ -101,6 +102,7 @@ func CreateTargetedCommands() []Command {
 		NewTargetedCommand(aman, [][]string{{"ace"}}, "Aman, we’ve heard enough of that Ace, and I am sure he has heard enough of you. All bad precedents begin as justifiable measures."),
 		NewTargetedCommand(daantjuh, [][]string{{"officer"}}, "Few men are born brave, many become so through training and force of discipline. There is nothing, Daantjuh, more intimidating than a well-trained Roman officer."),
 		NewTargetedCommand(floridabum, [][]string{{"history"}}, "History is the teacher of life, Floridabum."),
-		NewTargetedCommand(geese, [][]string{{"kek", "kewk”"}}, "Say much in few words, Geese."),
+		NewTargetedCommand(geese, [][]string{{"kek", "kekw”"}}, "Say much in few words, Geese."),
+		NewTargetedCommand(romanrabbit, [][]string{{"xd"}}, "Such a whimsical thing to say, Roman Rabbit!"),
 	}
 }

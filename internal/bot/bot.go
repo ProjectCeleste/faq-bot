@@ -59,6 +59,12 @@ func NewFAQBot() *Bot {
 		cmd.NewStatus(),
 		cmd.NewRomans(),
 		cmd.NewThanks(),
+		cmd.NewGameNotAvailable(),
+		cmd.NewUpdateLauncher(),
+		cmd.NewInstallLinux(),
+		cmd.NewGameDoesntStart(),
+		cmd.NewChatEmpty(),
+		cmd.NewChangeUsername(),
 	}
 	targetedCmd := cmd.CreateTargetedCommands()
 	commands = append(commands, targetedCmd...)
