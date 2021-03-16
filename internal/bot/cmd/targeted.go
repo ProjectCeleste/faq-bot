@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"sync"
 	"time"
 
 	"github.com/ProjectCeleste/faq-bot/internal/detect"
@@ -26,16 +25,20 @@ var (
 	bahram       = "630937337832013876"
 	andy         = "345951904918011904"
 	chen         = "683665022110662725"
+	zawnius      = "145256386639429632"
+	hans         = "213045950636228608"
+	boriss       = "480818294354608150"
+	aman         = "159649426506383360"
+	daantjuh     = "210736536541462528"
+	floridabum   = "324376107895750657"
+	geese        = "351402427960000512"
 )
 
 // TargetedCommand a simple generic command targeted at a single user.
 // These commands trigger only once every Timeout.
 type TargetedCommand struct {
-	TargetedSentenceDetection
-	Response     string
-	Timeout      time.Duration
-	lastResponse time.Time
-	mu           sync.Mutex
+	TimeoutTrigger
+	Response string
 }
 
 // NewTargetedCommand create a new basic targeted command with a default Timeout of 1 hour.
@@ -45,35 +48,20 @@ func NewTargetedCommand(userID string, keywords [][]string, response string) *Ta
 		groups = append(groups, detect.WordGroup{Words: g})
 	}
 	return &TargetedCommand{
-		TargetedSentenceDetection: TargetedSentenceDetection{
-			TargetUserID: userID,
-			SentenceDetection: SentenceDetection{
-				Detector: &detect.SentenceDetector{
-					Question: detect.QuestionBoth,
-					Groups:   groups,
+		TimeoutTrigger: TimeoutTrigger{
+			CommandTrigger: &TargetedSentenceDetection{
+				TargetUserID: userID,
+				SentenceDetection: SentenceDetection{
+					Detector: &detect.SentenceDetector{
+						Question: detect.QuestionBoth,
+						Groups:   groups,
+					},
 				},
 			},
+			Timeout: time.Hour,
 		},
 		Response: response,
-		Timeout:  time.Hour,
 	}
-}
-
-// Trigger returns true if the command is not timedout, the message's author
-// is this command's target and the message matches the trigger criteria.
-func (c *TargetedCommand) Trigger(message *discordgo.MessageCreate) bool {
-	// Handlers are executed in goroutines, meaning there can be a race condition on
-	// lastResponse if it's not protected.
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	if !c.lastResponse.IsZero() && time.Since(c.lastResponse) < c.Timeout {
-		return false
-	}
-	if c.TargetedSentenceDetection.Trigger(message) {
-		c.lastResponse = time.Now()
-		return true
-	}
-	return false
 }
 
 // Answer the message defined in this TargetedCommand.
@@ -107,5 +95,12 @@ func CreateTargetedCommands() []Command {
 		NewTargetedCommand(chen, [][]string{{"caesar"}}, "Anyone know any good Caesar jokes?  I can take a stab at one."),
 		NewTargetedCommand(pf2k, [][]string{{"crassus"}}, "PF2K, it is an honor and a privilege to have you in my Legion!"),
 		NewTargetedCommand(systemGlitch, [][]string{{"awesome"}}, "Not as awesome as you are, master! I am looking forward to our next lesson."),
+		NewTargetedCommand(zawnius, [][]string{{"gallic"}}, "Salve Zawnius! You make a wonderful Gallic Horseman, yourself. Certes!"),
+		NewTargetedCommand(hans, [][]string{{"huns"}}, "Yes, Hans, we know you look forward to the day the Huns sack Rome. In battle it is the cowards who run the most risk. Bravery is a rampart of defense. Take heed, Hans."),
+		NewTargetedCommand(boriss, [][]string{{"sea"}, {"people"}}, "Boriss, the Sea People are pests who have no place at the table of the mighty Roman Empire."),
+		NewTargetedCommand(aman, [][]string{{"ace"}}, "Aman, we’ve heard enough of that Ace, and I am sure he has heard enough of you. All bad precedents begin as justifiable measures."),
+		NewTargetedCommand(daantjuh, [][]string{{"officer"}}, "Few men are born brave, many become so through training and force of discipline. There is nothing, Daantjuh, more intimidating than a well-trained Roman officer."),
+		NewTargetedCommand(floridabum, [][]string{{"history"}}, "History is the teacher of life, Floridabum."),
+		NewTargetedCommand(geese, [][]string{{"kek", "kewk”"}}, "Say much in few words, Geese."),
 	}
 }

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"sync"
+	"time"
 
 	"github.com/ProjectCeleste/faq-bot/internal/detect"
 	"github.com/bwmarrin/discordgo"
@@ -15,8 +17,13 @@ var (
 
 // Command a chatbot operation that has specific trigger conditions.
 type Command interface {
-	Trigger(message *discordgo.MessageCreate) bool
+	CommandTrigger
 	Answer(s *discordgo.Session, m *discordgo.MessageCreate) error
+}
+
+// CommandTrigger a trigger condition.
+type CommandTrigger interface {
+	Trigger(message *discordgo.MessageCreate) bool
 }
 
 // SentenceDetection a generic command triggered by a SentenceDetector.
@@ -43,6 +50,31 @@ type TargetedSentenceDetection struct {
 func (s *TargetedSentenceDetection) Trigger(message *discordgo.MessageCreate) bool {
 	if message.Author.ID == s.TargetUserID {
 		return s.SentenceDetection.Trigger(message)
+	}
+	return false
+}
+
+// TimeoutTrigger a CommandTrigger wrapper with timeout.
+type TimeoutTrigger struct {
+	CommandTrigger
+	Timeout      time.Duration
+	lastResponse time.Time
+	mu           sync.Mutex
+}
+
+// Trigger returns true if the command is not timed out, the message's author
+// is this command's target and the message matches the trigger criteria.
+func (c *TimeoutTrigger) Trigger(message *discordgo.MessageCreate) bool {
+	// Handlers are executed in goroutines, meaning there can be a race condition on
+	// lastResponse if it's not protected.
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if !c.lastResponse.IsZero() && time.Since(c.lastResponse) < c.Timeout {
+		return false
+	}
+	if c.CommandTrigger.Trigger(message) {
+		c.lastResponse = time.Now()
+		return true
 	}
 	return false
 }

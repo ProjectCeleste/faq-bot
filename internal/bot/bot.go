@@ -62,6 +62,8 @@ func NewFAQBot() *Bot {
 	}
 	targetedCmd := cmd.CreateTargetedCommands()
 	commands = append(commands, targetedCmd...)
+	globalCmd := cmd.CreateGlobalCommands()
+	commands = append(commands, globalCmd...)
 	bot := &Bot{
 		Commands: commands,
 	}
