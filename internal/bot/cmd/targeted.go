@@ -87,7 +87,7 @@ func CreateTargetedCommands() []Command {
 		NewTargetedCommand(ncsgeek, [][]string{{"help"}}, "Salutations! NCSGeek is the most helpful Roman in all of the Empire."),
 		NewTargetedCommand(wartai, [][]string{{"later"}, {"guys"}}, "Good day, Wartai! We shall see you tomorrow!"),
 		NewTargetedCommand(theace9, [][]string{{"vok"}}, "The Ace of exactly what?  He certainly seems terrified of the Valley of Kings. Can he even go a day without mentioning it?"),
-		NewTargetedCommand(ardeshir, [][]string{{"damn", "shit", "fuck"}}, "Ardeshir, watch your mouth!"),
+		NewTargetedCommand(ardeshir, [][]string{{"damn", "shit", "fuck", "fucking"}}, "Ardeshir, watch your mouth!"),
 		NewTargetedCommand(pharos, [][]string{{"spartacus"}}, "Spartacus is a treasonous slave whom I slayed in defending the honor of the Roman Empire!"),
 		NewTargetedCommand(gamevideo113, [][]string{{"mfw"}}, "My dear gamevideo you should toughen up. Nobody asked about your feelings."),
 		NewTargetedCommand(tim619, [][]string{{"things"}, {"to"}, {"remember"}}, "Spare us, Tim."),
