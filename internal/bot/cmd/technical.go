@@ -143,7 +143,7 @@ func NewGameDoesntStart() *GlobalCommand {
 				},
 			},
 		},
-		Response: "Well met! You may want to try these troubleshooting steps: <https://www.projectceleste.com/install/#troubleshooting>\n\nIf that doesn't help, ask in our <#322275547264581632> section and one of our moderators will help you soon.",
+		Response: "Well met! You may want to try these troubleshooting steps: <https://www.projectceleste.com/install/#troubleshooting>\n\nIf that doesn't help, ask in our <#322275547264581632> section and one of our tech support will help you soon.",
 	}
 }
 
