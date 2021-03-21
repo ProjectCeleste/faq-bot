@@ -59,7 +59,7 @@ func NewTargetedCommand(userID string, keywords [][]string, response string) *Ta
 					},
 				},
 			},
-			Timeout: time.Hour,
+			Timeout: time.Hour * 24,
 		},
 		Response: response,
 	}
