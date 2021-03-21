@@ -38,7 +38,7 @@ func NewGlobalCommand(keywords [][]string, response string) *GlobalCommand {
 					Groups:   groups,
 				},
 			},
-			Timeout: time.Hour * 2,
+			Timeout: time.Hour * 24,
 		},
 		Response: response,
 	}
