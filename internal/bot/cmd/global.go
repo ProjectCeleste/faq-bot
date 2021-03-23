@@ -47,7 +47,7 @@ func NewGlobalCommand(keywords [][]string, response string) *GlobalCommand {
 // CreateGlobalCommands create a slice of pre-built global commands.
 func CreateGlobalCommands() []Command {
 	return []Command{
-		NewGlobalCommand([][]string{{"clinicus"}}, "The Clinicus may appear at first a doddering old man, but inside he is quite deft It is always easy to begin a war, but very difficult to stop one."),
+		NewGlobalCommand([][]string{{"clinicus"}}, "The Clinicus may appear at first a doddering old man, but inside he is quite deft. It is always easy to begin a war, but very difficult to stop one."),
 		NewGlobalCommand([][]string{{"legionary"}}, "I have always been of the opinion that unpopularity earned by doing what is right is not unpopularity at all, but glory."),
 		NewGlobalCommand([][]string{{"centurion"}}, "Great empires are not maintained by timidity."),
 		NewGlobalCommand([][]string{{"scorpion"}}, "For the last time, Scorpios are Roman anti-Infantry siege craft. Scorpions are what crawls out of the mouths of dead Egyptians."),
