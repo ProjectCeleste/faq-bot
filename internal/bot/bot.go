@@ -57,8 +57,8 @@ func (b *Bot) readMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 func NewFAQBot() *Bot {
 	commands := []cmd.Command{
 		cmd.NewStatus(),
-		cmd.NewRomans(),
-		cmd.NewThanks(),
+		// cmd.NewRomans(),
+		// cmd.NewThanks(),
 		cmd.NewGameNotAvailable(),
 		cmd.NewUpdateLauncher(),
 		cmd.NewInstallLinux(),
@@ -66,10 +66,10 @@ func NewFAQBot() *Bot {
 		cmd.NewChatEmpty(),
 		cmd.NewChangeUsername(),
 	}
-	targetedCmd := cmd.CreateTargetedCommands()
-	commands = append(commands, targetedCmd...)
-	globalCmd := cmd.CreateGlobalCommands()
-	commands = append(commands, globalCmd...)
+	// targetedCmd := cmd.CreateTargetedCommands()
+	// commands = append(commands, targetedCmd...)
+	// globalCmd := cmd.CreateGlobalCommands()
+	// commands = append(commands, globalCmd...)
 	bot := &Bot{
 		Commands: commands,
 	}
