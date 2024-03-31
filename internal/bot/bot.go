@@ -65,6 +65,7 @@ func NewFAQBot() *Bot {
 		cmd.NewGameDoesntStart(),
 		cmd.NewChatEmpty(),
 		cmd.NewChangeUsername(),
+		cmd.NewQuestCrashes(),
 	}
 	// targetedCmd := cmd.CreateTargetedCommands()
 	// commands = append(commands, targetedCmd...)
