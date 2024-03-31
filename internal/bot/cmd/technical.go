@@ -220,7 +220,7 @@ func NewQuestCrashes() *GlobalCommand {
 							Question: detect.QuestionOnly,
 							Groups: []detect.WordGroup{
 								{Words: []string{"mission"}},
-								{Words: []string{"objective", "hard crash", "bugged", "exit"}},
+								{Words: []string{"objective", "crashes", "crashes without errors", "exits with no error", "no error", "hard crash", "bugged", "exit"}},
 							},
 						},
 					},
