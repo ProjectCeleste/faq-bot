@@ -46,7 +46,7 @@ jobs:
           source: "faq-bot"
           strip_components: 1
           overwrite: true
-          timeout: "60s"
+          timeout: "5m"
           target: "${{ secrets.DEPLOY_TARGET }}"
   restart:
     runs-on: ubuntu-latest
