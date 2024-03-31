@@ -203,3 +203,30 @@ func NewChangeUsername() *GlobalCommand {
 		Response: "Greetings! You may send a message to one of the Moderators with your current name in-game, and your desired name. If the username isn't already taken, you will get your account renamed. Remember, one rename per account!",
 	}
 }
+
+// NewQuestCrashes create an assistance command for when quests crash and users need to abandon and retake them.
+func NewQuestCrashes() *GlobalCommand {
+	return &GlobalCommand{
+		TimeoutTrigger: TimeoutTrigger{
+			CommandTrigger: &SentenceDetection{
+				Detector: &detect.SentenceDetector{
+					Question: detect.QuestionOnly,
+					Groups: []detect.WordGroup{
+						{Words: []string{"quest"}},
+						{Words: []string{"crash", "exit"}},
+					},
+					Variants: []detect.SentenceDetector{
+						{
+							Question: detect.QuestionOnly,
+							Groups: []detect.WordGroup{
+								{Words: []string{"mission"}},
+								{Words: []string{"objective", "hard crash", "bugged", "exit"}},
+							},
+						},
+					},
+				},
+			},
+		},
+		Response: "Greetings! Try abandoning your quest from your Quest Log and taking it again from the Quest Giver! In most cases, this solves the crashing issue for quests.",
+	}
+}
