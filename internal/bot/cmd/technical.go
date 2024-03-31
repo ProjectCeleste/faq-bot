@@ -210,14 +210,14 @@ func NewQuestCrashes() *GlobalCommand {
 		TimeoutTrigger: TimeoutTrigger{
 			CommandTrigger: &SentenceDetection{
 				Detector: &detect.SentenceDetector{
-					Question: detect.QuestionOnly,
+					Question: detect.QuestionBoth,
 					Groups: []detect.WordGroup{
 						{Words: []string{"quest"}},
 						{Words: []string{"crash", "exit"}},
 					},
 					Variants: []detect.SentenceDetector{
 						{
-							Question: detect.QuestionOnly,
+							Question: detect.QuestionBoth,
 							Groups: []detect.WordGroup{
 								{Words: []string{"mission"}},
 								{Words: []string{"objective", "crashes", "crashes without errors", "exits with no error", "no error", "hard crash", "bugged", "exit"}},
